@@ -4,6 +4,7 @@ using UnityEngine;
 public class HealthAuthoring : MonoBehaviour
 {
     public float maxValue;
+    public bool showHealthBar;
 
     class Baker : Baker<HealthAuthoring>
     {
@@ -14,6 +15,7 @@ public class HealthAuthoring : MonoBehaviour
             {
                 currentValue = authoring.maxValue,
                 maxValue = authoring.maxValue,
+                showHealthBar = authoring.showHealthBar,
             });
         }
     }
@@ -23,4 +25,5 @@ public struct Health : IComponentData
 {
     public float maxValue;
     public float currentValue;
+    public bool showHealthBar;
 }

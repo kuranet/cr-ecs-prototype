@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 1000
+  showHealthBar: 1
 --- !u!114 &188968006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 1000
+  showHealthBar: 1
 --- !u!114 &591781094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 1000
+  showHealthBar: 0
 --- !u!65 &925536227
 BoxCollider:
   m_ObjectHideFlags: 0

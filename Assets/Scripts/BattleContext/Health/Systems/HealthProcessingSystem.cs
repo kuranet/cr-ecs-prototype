@@ -15,6 +15,8 @@ public partial struct HealthProcessingSystem : ISystem
             health.ValueRW.currentValue -= addDamage.ValueRO.value;
             UnityEngine.Debug.LogError($"apply damage {addDamage.ValueRO.value}");
 
+            health.ValueRW.showHealthBar = true;
+
             if (health.ValueRO.currentValue <= 0)
             {
                 ecb.AddComponent<DeadTag>(entity);
