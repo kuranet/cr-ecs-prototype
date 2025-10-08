@@ -9,11 +9,22 @@ public partial struct TargetSelectionSystem : ISystem
     {
         var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
 
+        foreach (var (target, entity) in
+                 SystemAPI.Query<RefRW<Target>>()
+                 .WithEntityAccess())
+        {
+            // target is dead. clear it
+            if (!state.EntityManager.Exists(target.ValueRO.Object))
+            {
+                ecb.RemoveComponent<Target>(entity);
+            }
+        }
+
         foreach (var (transform, attackTargets, ownerTag, entity) in
-                 SystemAPI.Query< RefRO<LocalTransform>, RefRO<AttackTargets>, RefRO<OwnerTag>>()
-                 .WithEntityAccess()
-                 .WithAll<UnitTag>()
-                 .WithNone<Target>())
+              SystemAPI.Query<RefRO<LocalTransform>, RefRO<AttackTargets>, RefRO<OwnerTag>>()
+              .WithEntityAccess()
+              .WithAll<UnitTag>()
+              .WithNone<Target>())
         {
             // if target is dead, clear Target.
             // if has first hit then skip target selection.

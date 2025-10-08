@@ -36,10 +36,16 @@ public static class UsingAbilityUtil
             return false;
         }
 
-        var allAbilitiesList = em.GetBuffer<AbilityChargeBuffer>(unit);
-        var localTransform = em.GetComponentData<LocalTransform>(unit);
+        if (!em.HasComponent<Target>(unit))
+        {
+            return false;
+        }
+
         var target = em.GetComponentData<Target>(unit);
         var targetLocalTransform = em.GetComponentData<LocalTransform>(target.Object);
+
+        var allAbilitiesList = em.GetBuffer<AbilityChargeBuffer>(unit);
+        var localTransform = em.GetComponentData<LocalTransform>(unit);
 
         for (int i = 0; i < allAbilitiesList.Length; i++)
         {

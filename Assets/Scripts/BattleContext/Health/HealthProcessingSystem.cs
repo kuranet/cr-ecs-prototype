@@ -9,10 +9,16 @@ public partial struct HealthProcessingSystem : ISystem
 
         foreach (var (health, addDamage, entity) in
                  SystemAPI.Query<RefRW<Health>, RefRO<AddDamage>>()
+                 .WithNone<DeadTag>()
                  .WithEntityAccess())
         {
             health.ValueRW.currentValue -= addDamage.ValueRO.value;
             UnityEngine.Debug.LogError($"apply damage {addDamage.ValueRO.value}");
+
+            if (health.ValueRO.currentValue <= 0)
+            {
+                ecb.AddComponent<DeadTag>(entity);
+            }
 
             ecb.RemoveComponent<AddDamage>(entity);
         }
