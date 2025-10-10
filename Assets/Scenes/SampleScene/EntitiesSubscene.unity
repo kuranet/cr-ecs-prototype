@@ -776,6 +776,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4da0464ade4164c8e7915a62a35885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitLevel: 1
+  unitId: skeleton
   Prefab: {fileID: 7593845258755767903, guid: 463bfb548fce2e14d9716b4a59195359, type: 3}
   Entity: {fileID: 9066636800584990454, guid: 6439821c139ea244082c8f81cf02f895, type: 3}
 --- !u!4 &1786967733

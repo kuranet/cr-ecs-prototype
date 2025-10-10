@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
@@ -14,6 +15,8 @@ public partial struct EntitySpawner : ISystem
             return;
         }
 
+        var ecb = new EntityCommandBuffer(Allocator.Temp);
+
         foreach (var spawner in spawners)
         {
             var warriorGOPrefab = state.EntityManager.GetComponentData<ActorGOPrefab>(spawner);
@@ -23,6 +26,20 @@ public partial struct EntitySpawner : ISystem
 
             instance.GetComponent<EntityToGOLink>().entity = createdEntity;
 
+            var config = UnitConfigLibrary.Instance.GetConfig(warriorGOPrefab.unitId);
+            
+            ecb.AddComponent(createdEntity, new Health() { 
+                maxValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
+                currentValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
+                showHealthBar = true,
+            });
+
+            var buf = ecb.AddBuffer<StatsConfig>(createdEntity);
+            foreach (var baseStat in config._baseStats)
+            {
+                buf.Add(baseStat);
+            }
+
             state.EntityManager.AddComponentObject(createdEntity, instance.GetComponent<Transform>());
             state.EntityManager.AddComponentObject(createdEntity, instance.GetComponent<Animator>());
             state.EntityManager.AddComponentData(createdEntity, new ActorGOInstance { Instance = instance });
@@ -30,23 +47,8 @@ public partial struct EntitySpawner : ISystem
             state.EntityManager.RemoveComponent<ActorGOPrefab>(spawner);
         }
 
+        ecb.Playback(state.EntityManager);
+        ecb.Dispose();
     }
 }
 
-//public event Action<Entity> EntitySpawned;
-
-//protected override void OnCreate()
-//{
-//    //RequireForUpdate<SpawnActorConfig>();
-//}
-
-//protected override void OnUpdate()
-//{
-//    var config = SystemAPI.GetSingleton<SpawnActorConfig>();
-
-//    if (Input.GetKeyDown(KeyCode.T)) { 
-//        var entity = EntityManager.Instantiate(config.prefab);
-//        EntitySpawned.Invoke(entity);
-//    }
-//}
-//}

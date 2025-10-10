@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ActorAuthoring : MonoBehaviour
 {
+    public int unitLevel = 1;
+    public string unitId;
     public GameObject Prefab;
     public GameObject Entity;
 
@@ -15,15 +17,19 @@ public class ActorAuthoring : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponentObject(entity, new ActorGOPrefab
             {
+                unitLevel = authoring.unitLevel,
+                unitId = authoring.unitId,
                 Prefab = authoring.Prefab,
                 Entity = GetEntity(authoring.Entity, TransformUsageFlags.Dynamic),
-            });
+            }); ;
         }
     }
 }
 
 public class ActorGOPrefab : IComponentData
 {
+    public string unitId;
+    public int unitLevel;
     public GameObject Prefab;
     public Entity Entity;
 }
