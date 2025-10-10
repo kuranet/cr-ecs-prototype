@@ -2,7 +2,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 public partial struct HitOnCollisionSystem : ISystem
 {
@@ -28,7 +27,17 @@ public partial struct HitOnCollisionSystem : ISystem
                 var distanceToOther = math.distance(transform.ValueRO.Position, otherTransform.ValueRO.Position);
                 if (distanceToOther < hitOnCollision.ValueRO.radius)
                 {
-                    ecb.AddComponent(otherEntity, new AddDamage() { value = hitOnCollision.ValueRO.damage });
+                    var stats = state.EntityManager.GetBuffer<StatsConfig>(entity);
+                    var damage = 0f;
+                    foreach(var stat in stats)
+                    {
+                        if(stat.type == StatType.Damage)
+                        {
+                            damage += stat.addedValue;
+                        }
+                    }
+                    
+                    ecb.AddComponent(otherEntity, new AddDamage() { value = damage });
                     ecb.RemoveComponent<HitOnCollision>(entity);
 
                     break;
