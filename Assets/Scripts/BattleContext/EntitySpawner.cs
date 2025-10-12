@@ -31,7 +31,6 @@ public partial struct EntitySpawner : ISystem
             ecb.AddComponent(createdEntity, new Health() { 
                 maxValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
                 currentValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
-                showHealthBar = true,
             });
 
             var buf = ecb.AddBuffer<StatsConfig>(createdEntity);

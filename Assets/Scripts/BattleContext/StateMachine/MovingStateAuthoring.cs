@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-public struct MovingState : IComponentData
+public struct MovingState : IComponentData, IUnitState
 {
     public float movingSpeed;
 }
