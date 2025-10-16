@@ -15,5 +15,3 @@ public class UnitTagAuthoring : MonoBehaviour
     }
 
 }
-
-public struct UnitTag : IComponentData { }

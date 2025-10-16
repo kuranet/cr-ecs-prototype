@@ -3,11 +3,11 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-public partial struct EntitySpawner : ISystem
+public partial struct ActorSpawnSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
-        var query = SystemAPI.QueryBuilder().WithAll<ActorGOPrefab>().Build();
+        var query = SystemAPI.QueryBuilder().WithAll<RequestActorSpawn>().Build();
         var spawners = query.ToEntityArray(Allocator.Temp);
 
         if (AllActorsHolder.Instance == null)
@@ -19,7 +19,7 @@ public partial struct EntitySpawner : ISystem
 
         foreach (var spawner in spawners)
         {
-            var warriorGOPrefab = state.EntityManager.GetComponentData<ActorGOPrefab>(spawner);
+            var warriorGOPrefab = state.EntityManager.GetComponentData<RequestActorSpawn>(spawner);
             var instance = GameObject.Instantiate(warriorGOPrefab.Prefab, AllActorsHolder.Instance.transform);
 
             var createdEntity = state.EntityManager.Instantiate(warriorGOPrefab.Entity);
@@ -41,9 +41,8 @@ public partial struct EntitySpawner : ISystem
 
             state.EntityManager.AddComponentObject(createdEntity, instance.GetComponent<Transform>());
             state.EntityManager.AddComponentObject(createdEntity, instance.GetComponent<Animator>());
-            state.EntityManager.AddComponentData(createdEntity, new ActorGOInstance { Instance = instance });
 
-            state.EntityManager.RemoveComponent<ActorGOPrefab>(spawner);
+            state.EntityManager.RemoveComponent<RequestActorSpawn>(spawner);
         }
 
         ecb.Playback(state.EntityManager);

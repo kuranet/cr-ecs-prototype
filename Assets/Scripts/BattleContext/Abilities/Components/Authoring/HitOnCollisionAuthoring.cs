@@ -12,7 +12,6 @@ public class HitOnCollisionAuthoring : MonoBehaviour
         {
             var entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            UnityEngine.Debug.LogError($"authorited");
             AddComponent(entity, new HitOnCollision
             {
                 radius = authoring.radius,
@@ -20,10 +19,4 @@ public class HitOnCollisionAuthoring : MonoBehaviour
             });
         }
     }
-}
-
-public struct HitOnCollision: IComponentData
-{
-    public float radius;
-    public float damage;
 }

@@ -15,10 +15,7 @@ public class TowerTagAuthoring : MonoBehaviour
                 bridge = authoring.gameObject.AddComponent<EntityToGOLink>();
 
             bridge.entity = entity;
-            //bridge.world = World.DefaultGameObjectInjectionWorld;
         }
     }
 
 }
-
-public struct TowerTag : IComponentData { }

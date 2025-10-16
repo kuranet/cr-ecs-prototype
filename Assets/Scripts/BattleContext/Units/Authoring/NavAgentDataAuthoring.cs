@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Entities;
-using Unity.Mathematics;
 
 public class NavAgentDataAuthoring : MonoBehaviour
 {
@@ -17,9 +16,4 @@ public class NavAgentDataAuthoring : MonoBehaviour
             }) ;
         }
     }
-}
-
-public struct NavAgentData : IComponentData
-{
-    public float3 Destination;
 }

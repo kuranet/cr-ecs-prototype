@@ -14,4 +14,3 @@ public class FlyingTargetTagAuthoring : MonoBehaviour
 
 }
 
-public struct FlyingTargetTag : IComponentData { }

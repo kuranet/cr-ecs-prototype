@@ -17,9 +17,3 @@ public class DestroyAfterDurationAuthoring : MonoBehaviour
         }
     }
 }
-
-public struct DestroyAfterDuration: IComponentData
-{
-    public float duration;
-    public float lifeTime;
-}

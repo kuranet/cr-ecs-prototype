@@ -1,8 +1,6 @@
-using Graphical.AnimationWithGameObjects;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
-using UnityEditor.Playables;
 
 public partial struct UsingAbilityStateSystem : ISystem
 {
