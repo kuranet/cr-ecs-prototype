@@ -42,6 +42,14 @@ public partial struct DeathProcessingSystem : ISystem
             ecb.DestroyEntity(entity);
         }
 
+        foreach (var (unit, entity) in
+                 SystemAPI.Query<RefRO<UnitTag>>()
+                 .WithEntityAccess()
+                 .WithAll<DeadTag>())
+        {
+            ecb.DestroyEntity(entity);
+        }
+        
         ecb.Playback(state.EntityManager);
         ecb.Dispose();
     }

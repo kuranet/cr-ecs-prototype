@@ -1,7 +1,9 @@
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 
+[UpdateAfter(typeof(TargetSelectionSystem))]
 public partial struct UsingAbilityStateSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
@@ -11,16 +13,24 @@ public partial struct UsingAbilityStateSystem : ISystem
         foreach (var (transform, usingAbilityState, unitEntity) in
                  SystemAPI.Query<RefRO<LocalTransform>, UsingAbilityState>()
                  .WithEntityAccess()
-                 .WithAll<UnitTag>())
+                 .WithAll<CanAttack>())
         {
             usingAbilityState.timeInState += SystemAPI.Time.DeltaTime;
 
             if (!usingAbilityState.hasCast && usingAbilityState.timeInState > usingAbilityState.currentAbility.castDelay)
             {
                 var createdEntity = state.EntityManager.Instantiate(usingAbilityState.currentAbility.prefab);
+                ecb.AddComponent(createdEntity, new CreationReference() { Creator = unitEntity });
 
-                var localTrans = SystemAPI.GetComponentRW<LocalTransform>(createdEntity);
-                localTrans.ValueRW.Position = transform.ValueRO.Position;
+                var abilityLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(createdEntity);
+                abilityLocalTransform.ValueRW.Position = transform.ValueRO.Position;
+
+                if (state.EntityManager.HasComponent<AbilityMovement>(createdEntity))
+                {
+                    var aM = state.EntityManager.GetComponentData<AbilityMovement>(createdEntity);
+                    aM.directionToTarget = math.normalize(usingAbilityState.targetPosition - transform.ValueRO.Position);
+                    state.EntityManager.SetComponentData(createdEntity, aM);
+                }
 
                 var stats = state.EntityManager.GetBuffer<StatsConfig>(unitEntity);
                 var abilityStats = ecb.AddBuffer<StatsConfig>(createdEntity);
@@ -36,7 +46,6 @@ public partial struct UsingAbilityStateSystem : ISystem
                 }
 
                 usingAbilityState.hasCast = true;
-                UnityEngine.Debug.LogError($"after {usingAbilityState.timeInState} actually cast ability so");
             }
         }
 

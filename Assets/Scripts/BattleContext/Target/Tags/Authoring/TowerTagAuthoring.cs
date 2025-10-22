@@ -9,13 +9,11 @@ public class TowerTagAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new TowerTag());
+            AddComponent(entity, new CanAttack());
+            AddComponent(entity, new IdleState());
 
-            var bridge = authoring.GetComponent<EntityToGOLink>();
-            if (bridge == null)
-                bridge = authoring.gameObject.AddComponent<EntityToGOLink>();
-
-            bridge.entity = entity;
+            var buffer = AddBuffer<StatsConfig>(entity);
+            buffer.Add(new StatsConfig() { type = StatType.Damage, addedValue = 50 });
         }
     }
-
 }

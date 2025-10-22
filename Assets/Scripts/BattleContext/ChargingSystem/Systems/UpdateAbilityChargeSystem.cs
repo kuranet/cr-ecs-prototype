@@ -8,7 +8,7 @@ public partial struct UpdateAbilityChargeSystem : ISystem
         foreach (var (trans, entity) in
                  SystemAPI.Query<RefRO<LocalTransform>>()
                  .WithEntityAccess()
-                 .WithAll<UnitTag>())
+                 .WithAll<CanAttack>())
         {
             var abilityBuffer = state.EntityManager.GetBuffer<AbilityChargeBuffer>(entity);
 

@@ -1,6 +1,7 @@
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Transforms;
 using UnityEngine;
 
 public partial struct ActorSpawnSystem : ISystem
@@ -19,8 +20,11 @@ public partial struct ActorSpawnSystem : ISystem
 
         foreach (var spawner in spawners)
         {
+            var spawnerPosition = state.EntityManager.GetComponentData<LocalTransform>(spawner).Position;
             var warriorGOPrefab = state.EntityManager.GetComponentData<RequestActorSpawn>(spawner);
             var instance = GameObject.Instantiate(warriorGOPrefab.Prefab, AllActorsHolder.Instance.transform);
+
+            instance.transform.position = spawnerPosition;
 
             var createdEntity = state.EntityManager.Instantiate(warriorGOPrefab.Entity);
 
@@ -39,10 +43,11 @@ public partial struct ActorSpawnSystem : ISystem
                 buf.Add(baseStat);
             }
 
-            state.EntityManager.AddComponentObject(createdEntity, instance.GetComponent<Transform>());
-            state.EntityManager.AddComponentObject(createdEntity, instance.GetComponent<Animator>());
+            var localTrans = state.EntityManager.GetComponentData<LocalTransform>(createdEntity);
+            localTrans.Position = spawnerPosition;
+            state.EntityManager.SetComponentData(createdEntity, localTrans);
 
-            state.EntityManager.RemoveComponent<RequestActorSpawn>(spawner);
+            state.EntityManager.DestroyEntity(spawner);
         }
 
         ecb.Playback(state.EntityManager);

@@ -23,7 +23,7 @@ public partial struct TargetSelectionSystem : ISystem
         foreach (var (transform, attackTargets, ownerTag, entity) in
               SystemAPI.Query<RefRO<LocalTransform>, RefRO<AttackTargets>, RefRO<OwnerTag>>()
               .WithEntityAccess()
-              .WithAll<UnitTag>()
+              .WithAll<CanAttack>()
               .WithNone<Target>())
         {
             // if target is dead, clear Target.
@@ -35,7 +35,7 @@ public partial struct TargetSelectionSystem : ISystem
 
             foreach (var (targetTransform, targetEntity) in
                      SystemAPI.Query<RefRO<LocalTransform>>().WithEntityAccess()
-                     .WithAny<TowerTag, UnitTag, FlyingTargetTag>())
+                     .WithAll<CanAttack>())
             {
                 // Do not target self.
                 if (targetEntity == entity)

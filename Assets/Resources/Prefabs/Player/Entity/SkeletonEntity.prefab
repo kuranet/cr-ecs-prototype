@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2292086760210742319}
   - component: {fileID: 8475886061092414997}
   m_Layer: 0
-  m_Name: Unit cube
+  m_Name: SkeletonEntity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,4 +114,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 100
-  showHealthBar: 0
+  showHealthBar: 1

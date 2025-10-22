@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 76614567910725908}
   - component: {fileID: 6536118960971355534}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: SkeletonGO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

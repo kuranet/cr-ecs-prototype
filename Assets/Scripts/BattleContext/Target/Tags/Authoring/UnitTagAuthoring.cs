@@ -11,6 +11,7 @@ public class UnitTagAuthoring : MonoBehaviour
             UnityEngine.Debug.LogError($"add unity tag on {entity}");
             AddComponent(entity, new UnitTag());
             AddComponent(entity, new IdleState());
+            AddComponent(entity, new CanAttack());
         }
     }
 

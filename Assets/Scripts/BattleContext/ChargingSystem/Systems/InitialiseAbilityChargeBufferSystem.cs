@@ -10,7 +10,7 @@ public partial struct InitialiseAbilityChargeBufferSystem : ISystem
         foreach (var (abilityBuffer, entity) in
                  SystemAPI.Query<DynamicBuffer<AbilitiesBuffer>>()
                  .WithEntityAccess()
-                 .WithAll<UnitTag>()
+                 .WithAll<CanAttack>()
                  .WithNone<AbilityChargeBuffer>())
         {
             var buffer = ecb.AddBuffer<AbilityChargeBuffer>(entity);

@@ -3,7 +3,8 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-public partial struct PlayerStateUpdateSystem : ISystem
+[UpdateAfter(typeof(TargetSelectionSystem))]
+public partial struct TowerStateUpdateSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
@@ -12,7 +13,7 @@ public partial struct PlayerStateUpdateSystem : ISystem
         foreach (var (usingAbilityState, entity) in
                  SystemAPI.Query<UsingAbilityState>()
                  .WithEntityAccess()
-                 .WithAll<UnitTag>())
+                 .WithAll<TowerTag>())
         {
             var abilitySo = usingAbilityState.currentAbility;
             if (usingAbilityState.timeInState > (abilitySo.castDuration + abilitySo.castDelay))
@@ -26,8 +27,8 @@ public partial struct PlayerStateUpdateSystem : ISystem
         foreach (var (localTransform, target, entity) in
                  SystemAPI.Query<RefRO<LocalTransform>, RefRO<Target>>()
                  .WithEntityAccess()
-                 .WithAll<UnitTag>()
-                 .WithAny<IdleState, MovingState>())
+                 .WithAll<TowerTag>()
+                 .WithAny<IdleState>())
         {
             var readyAbilities = UsingAbilityUtil.GetUnitAbilitiesBuffer(entity, state.EntityManager);
             if (readyAbilities.Count <= 0)
@@ -67,33 +68,10 @@ public partial struct PlayerStateUpdateSystem : ISystem
                     {
                         ecb.RemoveComponent<IdleState>(entity);
                     }
-                    else if (state.EntityManager.HasComponent<MovingState>(entity))
-                    {
-                        ecb.RemoveComponent<MovingState>(entity);
-                    }
 
                     //UnityEngine.Debug.LogError($"SWITCH TO ATTACKING STATE");
                 }
             }
-        }
-
-        foreach (var (localTransform, entity) in
-                 SystemAPI.Query<RefRO<LocalTransform>>()
-                 .WithEntityAccess()
-                 .WithAll<UnitTag>()
-                 .WithAll<IdleState>())
-        {
-            // stay idle because for now we are in range.
-            if (UsingAbilityUtil.IsInMovementAbilityRange(entity, state.EntityManager))
-            {
-                continue;
-            }
-
-            // switch from idle to movement
-            ecb.RemoveComponent<IdleState>(entity);
-            ecb.AddComponent(entity, new MovingState());
-
-            //UnityEngine.Debug.LogError($"SWITCH TO MOVING STATE");
         }
 
         ecb.Playback(state.EntityManager);

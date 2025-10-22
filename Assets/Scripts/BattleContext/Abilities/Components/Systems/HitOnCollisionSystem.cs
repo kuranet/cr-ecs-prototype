@@ -9,8 +9,8 @@ public partial struct HitOnCollisionSystem : ISystem
     {
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (transform, hitOnCollision, entity) in
-                 SystemAPI.Query<RefRO<LocalTransform>, RefRO<HitOnCollision>>()
+        foreach (var (transform, hitOnCollision, reference, entity) in
+                 SystemAPI.Query<RefRO<LocalTransform>, RefRO<HitOnCollision>, RefRO<CreationReference>>()
                  .WithEntityAccess())
         {
             foreach (var (otherTransform, otherEntity) in
@@ -19,7 +19,7 @@ public partial struct HitOnCollisionSystem : ISystem
                      .WithEntityAccess())
             {
                 // todo: if target self?
-                if (otherEntity == entity)
+                if (otherEntity == reference.ValueRO.Creator)
                 {
                     continue;
                 }
@@ -40,9 +40,13 @@ public partial struct HitOnCollisionSystem : ISystem
                     ecb.AddComponent(otherEntity, new AddDamage() { value = damage });
                     ecb.RemoveComponent<HitOnCollision>(entity);
 
+                    if (state.EntityManager.HasComponent<DestroyOnHit>(entity))
+                    {
+                        ecb.AddComponent(entity, new DestroyAfterDuration() { duration = 0.001f });
+                    }
+
                     break;
                 }
-
             }
         }
 
