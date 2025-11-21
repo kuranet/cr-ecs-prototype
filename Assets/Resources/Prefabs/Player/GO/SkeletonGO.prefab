@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7252021004402219606}
   - component: {fileID: 76614567910725908}
   - component: {fileID: 6536118960971355534}
+  - component: {fileID: 296864496061850365}
   m_Layer: 0
   m_Name: SkeletonGO
   m_TagString: Untagged
@@ -121,6 +122,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linker: {fileID: 7252021004402219606}
   animController: {fileID: 5509426316572972718}
+--- !u!114 &296864496061850365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593845258755767903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4bdcdf3859b03b42bf5647135b01e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnOnDeath: {fileID: 8500920156052182585, guid: 000dd5e22ffec0144991599e8456b069, type: 3}
 --- !u!1 &8842899671226737223
 GameObject:
   m_ObjectHideFlags: 0
