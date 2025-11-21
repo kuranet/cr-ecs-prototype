@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7477678281561345927}
   - component: {fileID: 4242361874522940014}
   - component: {fileID: 895703876817742291}
+  - component: {fileID: 4733222218963330507}
   m_Layer: 0
   m_Name: Kings Tower
   m_TagString: Untagged
@@ -172,6 +173,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllowedTypes: 1
+--- !u!114 &4733222218963330507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650967541200315573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0629c4db1edf4c84e9c27f8b1429618c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTagAuthoring: {fileID: 6228512017724816075}
+  blockedLength: 18
+  blockedWidth: 10
 --- !u!1001 &743861698650491456
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,3 @@
-using Graphical.AnimationWithGameObjects;
-using System.Linq;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;

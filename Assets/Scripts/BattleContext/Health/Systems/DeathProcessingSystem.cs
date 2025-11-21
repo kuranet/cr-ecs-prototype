@@ -1,5 +1,6 @@
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Transforms;
 
 public partial struct DeathProcessingSystem : ISystem
 {
@@ -7,11 +8,19 @@ public partial struct DeathProcessingSystem : ISystem
     {
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
+        foreach (var (walkabilityBlocker, localTrans) in
+                 SystemAPI.Query<RefRO<TileWalkabilityBlocker>, RefRO<LocalTransform>>()
+                 .WithAll<DeadTag>()) 
+        {
+            TileBlockingManager.Instance.
+                RemoveBuilding(walkabilityBlocker.ValueRO.blockedLength, walkabilityBlocker.ValueRO.blockedWidth, localTrans.ValueRO.Position);
+        }
+
         // killed towers
         foreach (var (deadTower, towerOwner, entity) in
-                 SystemAPI.Query<RefRO<TowerIdentifier>, RefRO<OwnerTag>>()
-                 .WithEntityAccess()
-                 .WithAll<DeadTag>())
+             SystemAPI.Query<RefRO<TowerIdentifier>, RefRO<OwnerTag>>()
+             .WithEntityAccess()
+             .WithAll<DeadTag>())
         {
             UnityEngine.Debug.LogError($"tower {towerOwner.ValueRO.PlayerId} {deadTower.ValueRO.type} is dead!");
 
@@ -49,7 +58,7 @@ public partial struct DeathProcessingSystem : ISystem
         {
             ecb.DestroyEntity(entity);
         }
-        
+
         ecb.Playback(state.EntityManager);
         ecb.Dispose();
     }

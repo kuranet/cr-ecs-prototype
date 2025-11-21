@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 1263655348623244285}
   - component: {fileID: 1292737153266980744}
   - component: {fileID: 964847246504397820}
+  - component: {fileID: 1550957994297619709}
   m_Layer: 0
   m_Name: Archer Tower
   m_TagString: Untagged
@@ -367,6 +368,21 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
+--- !u!114 &1550957994297619709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014931000085247717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0629c4db1edf4c84e9c27f8b1429618c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTagAuthoring: {fileID: 7223168803468779540}
+  blockedLength: 12
+  blockedWidth: 18
 --- !u!1001 &1492586286108494278
 PrefabInstance:
   m_ObjectHideFlags: 0

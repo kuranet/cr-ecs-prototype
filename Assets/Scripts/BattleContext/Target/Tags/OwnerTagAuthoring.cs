@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class OwnerTagAuthoring : MonoBehaviour
 {
-    [SerializeField] private int playerId;
+    public int playerId;
 
     private class Baker : Baker<OwnerTagAuthoring>
     {
