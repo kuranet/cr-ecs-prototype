@@ -5,16 +5,16 @@ public class CameraManager
     public static Vector3 GetCameraOrientedPos()
     {
         Camera cam = Camera.main;
-        Vector3 mouse = Input.mousePosition;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
         float groundY = 0f;
-        Vector3 camPos = cam.transform.position;
-        Vector3 camForward = cam.transform.forward;
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0f, groundY, 0f));
 
-        float t = (groundY - camPos.y) / camForward.y;
-        if (t < 0) t = 0f;
+        if (groundPlane.Raycast(ray, out float enter))
+        {
+            return ray.GetPoint(enter);
+        }
 
-        mouse.z = t;
-        return cam.ScreenToWorldPoint(mouse);
+        return Vector3.zero;
     }
 }
