@@ -25,7 +25,7 @@ public partial class TileSelectingSystem : SystemBase
             return;
         }
 
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 worldPos = CameraManager.GetCameraOrientedPos();
 
         Vector3Int cell = _tilemap.WorldToCell(worldPos);
         var tile = _tilemap.GetTile(cell);

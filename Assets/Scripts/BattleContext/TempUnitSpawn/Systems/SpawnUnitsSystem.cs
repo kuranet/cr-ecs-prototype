@@ -1,4 +1,4 @@
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ public partial struct SpawnUnitsSystem : ISystem
 
         if (Input.GetMouseButtonUp(0))
         {
-            var worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 worldPoint = CameraManager.GetCameraOrientedPos();
             var buf = SystemAPI.GetSingletonBuffer<UnitLibrary>();
 
             var ent = state.EntityManager.Instantiate(buf[0].unitSpawnEntity);
