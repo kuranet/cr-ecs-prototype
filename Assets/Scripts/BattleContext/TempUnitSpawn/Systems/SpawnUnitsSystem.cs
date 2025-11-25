@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public partial struct SpawnUnitsSystem : ISystem
 {
@@ -18,6 +19,8 @@ public partial struct SpawnUnitsSystem : ISystem
             var localTrans = state.EntityManager.GetComponentData<LocalTransform>(ent);
             localTrans.Position = worldPoint;
             state.EntityManager.SetComponentData(ent, localTrans);
+
+            UnityEngine.Debug.LogError($"spawn player at {worldPoint}");
         }
 
         ecb.Playback(state.EntityManager);
