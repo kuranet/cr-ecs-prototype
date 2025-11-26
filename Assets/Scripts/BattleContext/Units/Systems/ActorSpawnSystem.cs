@@ -30,12 +30,16 @@ public partial struct ActorSpawnSystem : ISystem
 
             instance.GetComponent<EntityToGOLink>().entity = createdEntity;
 
+            UnityEngine.Debug.LogError($"spawn with level {warriorGOPrefab.unitLevel}");
+
             var config = UnitConfigLibrary.Instance.GetConfig(warriorGOPrefab.unitId);
             
             ecb.AddComponent(createdEntity, new Health() { 
                 maxValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
                 currentValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
             });
+
+            UnityEngine.Debug.LogError($"spawn entity level of {warriorGOPrefab.unitLevel}");
 
             var buf = ecb.AddBuffer<StatsConfig>(createdEntity);
             foreach (var baseStat in config._baseStats)
