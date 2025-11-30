@@ -14,7 +14,7 @@ public partial struct SpawnUnitsSystem : ISystem
 
             var ent = state.EntityManager.Instantiate(buf[0].unitSpawnEntity);
 
-            // set owner.
+            // set some request info.
             var requestInfo = state.EntityManager.GetComponentObject<RequestActorSpawn>(ent);
             requestInfo.ownerPlayerId = LocalPlayer.LocalPlayerIndex;
             requestInfo.requestedPosition = worldPoint;

@@ -9,7 +9,6 @@ public class NavAgentDataAuthoring : MonoBehaviour
         {
             var entity = GetEntity(TransformUsageFlags.Dynamic);
 
-            UnityEngine.Debug.LogError($"add NavAgentDataAuthoring tag on {entity}");
             AddComponent(entity, new NavAgentData
             {
                 Destination = authoring.transform.position,

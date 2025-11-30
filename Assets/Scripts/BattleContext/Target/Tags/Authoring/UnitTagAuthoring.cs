@@ -8,7 +8,6 @@ public class UnitTagAuthoring : MonoBehaviour
         public override void Bake(UnitTagAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-            UnityEngine.Debug.LogError($"add unity tag on {entity}");
             AddComponent(entity, new UnitTag());
             AddComponent(entity, new IdleState());
             AddComponent(entity, new CanAttack());

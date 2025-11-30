@@ -18,15 +18,6 @@ public class TileWalkabilityBlockerAuthoring : MonoBehaviour
                 blockedLength = authoring.blockedLength,
                 blockedWidth = authoring.blockedWidth,
             });
-
-            if (TileBlockingManager.Instance)
-            {
-                TileBlockingManager.Instance.AddBuilding(
-                    authoring.ownerTagAuthoring.playerId,
-                    authoring.blockedLength,
-                    authoring.blockedWidth,
-                    authoring.transform.position);
-            }
         }
     }
 

@@ -67,6 +67,17 @@ public partial struct TowerInitialisationSystem : ISystem
         ownerTag.PlayerId = playerIndex;
         state.EntityManager.SetComponentData(entity, ownerTag);
 
+        if (TileBlockingManager.Instance)
+        {
+            var tileBLocking = state.EntityManager.GetComponentData<TileWalkabilityBlocker>(entity);
+
+            TileBlockingManager.Instance.AddBuilding(
+                playerIndex,
+                tileBLocking.blockedLength,
+                tileBLocking.blockedWidth,
+                towerPos);
+        }
+
         // create visuals.
         var visualConfig = type == TowerPlacingHelper.TowerType.King ? TowerConfigLibrary.Instance.GetKingTowerConfig(towerVisuals) : TowerConfigLibrary.Instance.GetArcherTowerConfig(towerVisuals);
         var visuals = TowerPlacingHelper.Instance.AddTowerVisuals(type, playerIndex, visualConfig);

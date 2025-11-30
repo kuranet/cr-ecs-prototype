@@ -13,7 +13,6 @@ public partial struct HealthProcessingSystem : ISystem
                  .WithEntityAccess())
         {
             health.ValueRW.currentValue -= addDamage.ValueRO.value;
-            UnityEngine.Debug.LogError($"apply damage {addDamage.ValueRO.value}");
 
             health.ValueRW.showHealthBar = true;
 

@@ -3,13 +3,22 @@ using Unity.Entities;
 using Unity.Physics;
 using Unity.Physics.Systems;
 
+[RequireMatchingQueriesForUpdate]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(PhysicsSimulationGroup))]
 public partial struct HitOnCollisionSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
-        var collisionEvents = SystemAPI.GetSingleton<SimulationSingleton>().AsSimulation().CollisionEvents;
+        var sim = SystemAPI.GetSingleton<SimulationSingleton>();
+
+        if (sim.Type != SimulationType.UnityPhysics)
+            return; // NoPhysics, so exit safely
+
+        // Most important line: this completes physics jobs!
+        state.Dependency.Complete();
+
+        var collisionEvents = sim.AsSimulation().CollisionEvents;
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 

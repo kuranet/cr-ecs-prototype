@@ -13,7 +13,6 @@ public class OwnerTagAuthoring : MonoBehaviour
             AddComponent(entity, new OwnerTag() { PlayerId = authoring.playerId, });
         }
     }
-
 }
 
 public struct OwnerTag : IComponentData {

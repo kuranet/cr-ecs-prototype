@@ -16,7 +16,7 @@ public partial struct TowerStateUpdateSystem : ISystem
                  .WithAll<TowerTag>())
         {
             var abilitySo = usingAbilityState.currentAbility;
-            if (usingAbilityState.timeInState > (abilitySo.castDuration + abilitySo.castDelay))
+            if (usingAbilityState.timeInState > (abilitySo.castDuration + abilitySo.castDelay) || !state.EntityManager.Exists(usingAbilityState.target))
             {
                 //UnityEngine.Debug.LogError($"SWITCH TO IDLE");
                 ecb.RemoveComponent<UsingAbilityState>(entity);
@@ -47,6 +47,7 @@ public partial struct TowerStateUpdateSystem : ISystem
                     ecb.AddComponent(entity, new UsingAbilityState
                     {
                         currentAbility = abilitySo,
+                        target = target.ValueRO.Object,
                         targetPosition = targetTransform.Position,
                     });
 
