@@ -8,21 +8,28 @@ public class GoToTarget : MonoBehaviour
 {
     public EntityToGOLink linker;
     public NavMeshAgent agent;
+    public NavMeshObstacle obstacle;
 
     private void Start()
     {
         // enable obstacle after placing, so player would not be spawned at unawailable position. 
-        var obstacle = GetComponent<NavMeshObstacle>();
-        obstacle.enabled = true;
+        //var obstacle = GetComponent<NavMeshObstacle>();
+        obstacle.enabled = false;
     }
+
+    private bool skippedFirstTick = false;
 
     private void Update()
     {
         var isInMovingState = World.DefaultGameObjectInjectionWorld.EntityManager.HasComponent<MovingState>(linker.entity);
         agent.enabled = isInMovingState;
+        obstacle.enabled = skippedFirstTick && !isInMovingState;
 
         if (isInMovingState == false)
         {
+            // todo: weird, i know.
+            if (!skippedFirstTick) { skippedFirstTick = true; }
+
             return;
         }
 

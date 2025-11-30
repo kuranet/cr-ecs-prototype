@@ -6,7 +6,7 @@ public class TileMapMediator : MonoBehaviour
     [SerializeField] private GameObject _tileSelectingPrefab;
     [SerializeField] private Tilemap _tilemap;
 
-    private Vector3 _tileOffset = new Vector3(0.5f, 1.2f, 0.5f);
+    private Vector3 _tileOffset = new Vector3(0.5f, 0.1f, 0.5f);
 
     void Update()
     {
