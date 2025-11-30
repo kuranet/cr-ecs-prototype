@@ -15,25 +15,25 @@ public partial struct HitOnCollisionSystem : ISystem
 
         foreach (var collision in collisionEvents)
         {
-            if (GetHitObjectAndHitter(collision, state.EntityManager, out Entity attackEntity, out Entity targetEntity))
+            if (!GetHitObjectAndHitter(collision, state.EntityManager, out Entity attackEntity, out Entity targetEntity)) { continue; }
+            if (!CanAttackerObjectTargetTarget(state.EntityManager, attackEntity, targetEntity)) { continue; }
+
+            var stats = state.EntityManager.GetBuffer<StatsConfig>(attackEntity);
+            var damage = 0f;
+            foreach (var stat in stats)
             {
-                var stats = state.EntityManager.GetBuffer<StatsConfig>(attackEntity);
-                var damage = 0f;
-                foreach (var stat in stats)
+                if (stat.type == StatType.Damage)
                 {
-                    if (stat.type == StatType.Damage)
-                    {
-                        damage += stat.addedValue;
-                    }
+                    damage += stat.addedValue;
                 }
+            }
 
-                ecb.AddComponent(targetEntity, new AddDamage() { value = damage });
-                ecb.RemoveComponent<HitOnCollision>(attackEntity);
+            ecb.AddComponent(targetEntity, new AddDamage() { value = damage });
+            ecb.RemoveComponent<HitOnCollision>(attackEntity);
 
-                if (state.EntityManager.HasComponent<DestroyOnHit>(attackEntity))
-                {
-                    ecb.AddComponent(attackEntity, new DestroyAfterDuration() { duration = 0.001f });
-                }
+            if (state.EntityManager.HasComponent<DestroyOnHit>(attackEntity))
+            {
+                ecb.AddComponent(attackEntity, new DestroyAfterDuration() { duration = 0.001f });
             }
         }
 
@@ -65,5 +65,16 @@ public partial struct HitOnCollisionSystem : ISystem
         }
 
         return attackEntity != Entity.Null && targetEntity != Entity.Null;
+    }
+
+    private bool CanAttackerObjectTargetTarget(EntityManager entityManager, Entity attackEntity, Entity targetEntity)
+    {
+        var creationRef = entityManager.GetComponentData<CreationReference>(attackEntity);
+        var targetEntityOwnerShip = entityManager.GetComponentData<OwnerTag>(targetEntity);
+
+        if (!creationRef.canTargetAlly && creationRef.playerIndex == targetEntityOwnerShip.PlayerId) { return false; }
+        if (!creationRef.canTargetEnemy && creationRef.playerIndex != targetEntityOwnerShip.PlayerId) { return false; }
+
+        return true;
     }
 }

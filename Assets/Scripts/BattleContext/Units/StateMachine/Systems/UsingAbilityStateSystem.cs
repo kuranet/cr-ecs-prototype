@@ -20,7 +20,8 @@ public partial struct UsingAbilityStateSystem : ISystem
             if (!usingAbilityState.hasCast && usingAbilityState.timeInState > usingAbilityState.currentAbility.castDelay)
             {
                 var createdEntity = state.EntityManager.Instantiate(usingAbilityState.currentAbility.prefab);
-                ecb.AddComponent(createdEntity, new CreationReference() { Creator = unitEntity });
+                var ownerTag = state.EntityManager.GetComponentData<OwnerTag>(unitEntity);
+                ecb.AddComponent(createdEntity, new CreationReference() { Creator = unitEntity, playerIndex = ownerTag.PlayerId, canTargetAlly = false, canTargetEnemy = true });
 
                 var abilityLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(createdEntity);
                 abilityLocalTransform.ValueRW.Position = transform.ValueRO.Position;

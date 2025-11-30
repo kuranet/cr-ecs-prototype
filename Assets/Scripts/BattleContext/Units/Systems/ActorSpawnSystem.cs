@@ -20,26 +20,24 @@ public partial struct ActorSpawnSystem : ISystem
 
         foreach (var spawner in spawners)
         {
-            var spawnerPosition = state.EntityManager.GetComponentData<LocalTransform>(spawner).Position;
-            var warriorGOPrefab = state.EntityManager.GetComponentData<RequestActorSpawn>(spawner);
-            var instance = GameObject.Instantiate(warriorGOPrefab.Prefab, AllActorsHolder.Instance.transform);
+            var requestInfo = state.EntityManager.GetComponentData<RequestActorSpawn>(spawner);
+            var spawnerPosition = requestInfo.requestedPosition;
+            var instance = GameObject.Instantiate(requestInfo.Prefab, AllActorsHolder.Instance.transform);
 
             instance.transform.position = spawnerPosition;
 
-            var createdEntity = state.EntityManager.Instantiate(warriorGOPrefab.Entity);
+            var createdEntity = state.EntityManager.Instantiate(requestInfo.Entity);
 
             instance.GetComponent<EntityToGOLink>().entity = createdEntity;
 
-            UnityEngine.Debug.LogError($"spawn with level {warriorGOPrefab.unitLevel}");
+            var ownerTag = state.EntityManager.AddComponentData(createdEntity, new OwnerTag { PlayerId = requestInfo.ownerPlayerId });
 
-            var config = UnitConfigLibrary.Instance.GetConfig(warriorGOPrefab.unitId);
+            var config = UnitConfigLibrary.Instance.GetConfig(requestInfo.unitId);
             
             ecb.AddComponent(createdEntity, new Health() { 
                 maxValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
                 currentValue = config._baseStats.FirstOrDefault(c => c.type == StatType.Health).addedValue,
             });
-
-            UnityEngine.Debug.LogError($"spawn entity level of {warriorGOPrefab.unitLevel}");
 
             var buf = ecb.AddBuffer<StatsConfig>(createdEntity);
             foreach (var baseStat in config._baseStats)

@@ -15,7 +15,6 @@ public partial class TargetUpdatePositionSystem : SystemBase
             var location = SystemAPI.GetComponent<LocalTransform>(target.ValueRO.Object);
             if (float3.Equals(navAgentData.ValueRO.Destination, location.Position) == false)
             {
-                UnityEngine.Debug.LogError($"set new des");
                 navAgentData.ValueRW.Destination = location.Position;
                 PositionUpdated?.Invoke(entity, location.Position);
             }

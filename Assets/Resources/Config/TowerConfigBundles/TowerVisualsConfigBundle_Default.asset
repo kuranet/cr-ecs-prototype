@@ -15,3 +15,5 @@ MonoBehaviour:
   BundleIdentifier: 0
   KingTowerPrefab: {fileID: 5001929052107622868, guid: afb8252225282964eb00e6c6e7177255, type: 3}
   ArcherTowerPrefab: {fileID: 5186517080770468074, guid: 0b7cec1a6962e144bb54d0d27a3e2a00, type: 3}
+  allyTowersMaterial: {fileID: 2100000, guid: e29bf4d815cea284689cb5d4fdd92606, type: 2}
+  enemyTowersMaterial: {fileID: 2100000, guid: 65038f30f14746c4694633fd258143a6, type: 2}

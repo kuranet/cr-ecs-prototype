@@ -70,16 +70,12 @@ public partial struct TargetSelectionSystem : ISystem
                     {
                         Object = bestTarget,
                     });
-
-                    UnityEngine.Debug.LogError($"add target on {entity}");
                 }
                 else
                 {
                     var targetComponent = SystemAPI.GetComponentRW<Target>(entity);
                     targetComponent.ValueRW.Object = bestTarget;
                 }
-
-                UnityEngine.Debug.LogError($"set to {entity} target {bestTarget}");
             }
         }
 

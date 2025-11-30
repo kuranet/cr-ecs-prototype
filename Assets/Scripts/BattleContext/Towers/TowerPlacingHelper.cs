@@ -24,16 +24,17 @@ public class TowerPlacingHelper : MonoBehaviour
         return GetTransformByType(type, playerId).position;
     }
 
-    public int localPlayerIndex = 1;
-
     public GameObject AddTowerVisuals(TowerType type, int playerId, TowerConfig config)
     {
-        var isMyPlayer = playerId == localPlayerIndex;
+        var isMyPlayer = playerId == LocalPlayer.LocalPlayerIndex;
 
-        var transformToSpawnUnder = GetTransformByType(type, playerId);
+        var transformToSpawnUnder = GetTransformByType(type, playerId + 1);
 
         var visualPrefab = config._prefab;
         var instance = Instantiate(visualPrefab, transformToSpawnUnder);
+
+        var view = instance.GetComponent<TowerVisuals>();
+        view.SetMaterial(isMyPlayer ? config._allyMateriel : config._enemyMaterial);
 
         return instance;
     }

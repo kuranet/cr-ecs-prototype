@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1337143970743123753}
   - component: {fileID: 7569595428227984531}
-  - component: {fileID: 7223168803468779540}
+  - component: {fileID: 5972298932094139623}
   - component: {fileID: 3937991569950948228}
   - component: {fileID: 7318776528368560351}
   - component: {fileID: 6451425046028498123}
@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0d5125f5d3fab418d52aa84ba47987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7223168803468779540
+--- !u!114 &5972298932094139623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ebde5b4d7a9d04082d7914cdfe609a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 1
+  playerId: 0
 --- !u!114 &3937991569950948228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,8 +214,8 @@ MonoBehaviour:
       m_Value:
         Category00: 0
         Category01: 0
-        Category02: 0
-        Category03: 1
+        Category02: 1
+        Category03: 0
         Category04: 0
         Category05: 0
         Category06: 0
@@ -355,6 +355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0629c4db1edf4c84e9c27f8b1429618c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerTagAuthoring: {fileID: 7223168803468779540}
+  ownerTagAuthoring: {fileID: 0}
   blockedLength: 12
   blockedWidth: 18

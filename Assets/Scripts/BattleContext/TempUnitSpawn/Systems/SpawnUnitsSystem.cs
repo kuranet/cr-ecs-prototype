@@ -1,5 +1,4 @@
 ﻿using Unity.Entities;
-using Unity.Transforms;
 using UnityEngine;
 
 public partial struct SpawnUnitsSystem : ISystem
@@ -15,9 +14,10 @@ public partial struct SpawnUnitsSystem : ISystem
 
             var ent = state.EntityManager.Instantiate(buf[0].unitSpawnEntity);
 
-            var localTrans = state.EntityManager.GetComponentData<LocalTransform>(ent);
-            localTrans.Position = worldPoint;
-            state.EntityManager.SetComponentData(ent, localTrans);
+            // set owner.
+            var requestInfo = state.EntityManager.GetComponentObject<RequestActorSpawn>(ent);
+            requestInfo.ownerPlayerId = LocalPlayer.LocalPlayerIndex;
+            requestInfo.requestedPosition = worldPoint;
         }
 
         ecb.Playback(state.EntityManager);

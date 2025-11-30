@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 582754547333004767}
   - component: {fileID: 8134055761847153306}
+  - component: {fileID: 539491581741495588}
   m_Layer: 0
   m_Name: ArcherTowerVisuals_Default
   m_TagString: Untagged
@@ -47,6 +48,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb79f4a5ff15574d9a1ad4470c72caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &539491581741495588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5186517080770468074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456492f8cb93fed4bb47a35c438f76f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerParts:
+  - {fileID: 1767272160777028818}
+  - {fileID: 1849254948223946607}
+  - {fileID: 3037434619189849555}
 --- !u!1001 &1038161293567529963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,6 +144,11 @@ PrefabInstance:
 --- !u!4 &712399212982727680 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4eb2f518cd0abbe4da713655b35723da, type: 3}
+  m_PrefabInstance: {fileID: 1038161293567529963}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1849254948223946607 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 4eb2f518cd0abbe4da713655b35723da, type: 3}
   m_PrefabInstance: {fileID: 1038161293567529963}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1100858578479077462
@@ -211,6 +233,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4884d3d882f727d488a99bff06df49f2, type: 3}
   m_PrefabInstance: {fileID: 1100858578479077462}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1767272160777028818 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 4884d3d882f727d488a99bff06df49f2, type: 3}
+  m_PrefabInstance: {fileID: 1100858578479077462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4460453763054465367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -288,6 +315,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa51eca3e24fd0046966dc59cee28c51, type: 3}
+--- !u!23 &3037434619189849555 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: fa51eca3e24fd0046966dc59cee28c51, type: 3}
+  m_PrefabInstance: {fileID: 4460453763054465367}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4209755616712267452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fa51eca3e24fd0046966dc59cee28c51, type: 3}

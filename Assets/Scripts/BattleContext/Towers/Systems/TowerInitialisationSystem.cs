@@ -1,12 +1,7 @@
-using Streaming.SceneManagement.StreamingVolume;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using Unity.Physics;
-using Unity.Physics.Authoring;
 using Unity.Transforms;
-using UnityEngine;
 
 public partial struct TowerInitialisationSystem : ISystem
 {
@@ -74,7 +69,7 @@ public partial struct TowerInitialisationSystem : ISystem
 
         // create visuals.
         var visualConfig = type == TowerPlacingHelper.TowerType.King ? TowerConfigLibrary.Instance.GetKingTowerConfig(towerVisuals) : TowerConfigLibrary.Instance.GetArcherTowerConfig(towerVisuals);
-        var visuals = TowerPlacingHelper.Instance.AddTowerVisuals(type, playerIndex + 1, visualConfig);
+        var visuals = TowerPlacingHelper.Instance.AddTowerVisuals(type, playerIndex, visualConfig);
 
         visuals.GetComponent<EntityToGOLink>().entity = entity;
     }

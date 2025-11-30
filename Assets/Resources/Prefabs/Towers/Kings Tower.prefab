@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1082744560313566950}
   - component: {fileID: 2213901283232016636}
-  - component: {fileID: 6228512017724816075}
+  - component: {fileID: 5513766233606203749}
   - component: {fileID: 4831203496034756078}
   - component: {fileID: 5482320514884046173}
   - component: {fileID: 3321464987928256375}
@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0d5125f5d3fab418d52aa84ba47987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6228512017724816075
+--- !u!114 &5513766233606203749
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ebde5b4d7a9d04082d7914cdfe609a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 1
+  playerId: 0
 --- !u!114 &4831203496034756078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0629c4db1edf4c84e9c27f8b1429618c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerTagAuthoring: {fileID: 6228512017724816075}
+  ownerTagAuthoring: {fileID: 0}
   blockedLength: 18
   blockedWidth: 10
 --- !u!114 &2657828085617082654
@@ -279,9 +279,9 @@ MonoBehaviour:
       m_Override: 0
       m_Value:
         Category00: 0
-        Category01: 1
-        Category02: 0
-        Category03: 1
+        Category01: 0
+        Category02: 1
+        Category03: 0
         Category04: 0
         Category05: 0
         Category06: 0
