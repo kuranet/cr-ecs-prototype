@@ -11,6 +11,8 @@ public partial class TileSelectingSystem : SystemBase
         if (tilemapGO != null)
             _tilemap = tilemapGO.GetComponent<Tilemap>();
 
+        RequireForUpdate<BattleState>();
+
         base.OnCreate();
     }
 
@@ -19,7 +21,7 @@ public partial class TileSelectingSystem : SystemBase
         if (!Application.isFocused)
             return;
 
-        if (Input.GetMouseButton(0) == false)
+        if (Input.GetMouseButton(0) == false || canProcessInput() == false)
         {
             TileMapSingleton.HasSelectedCell = false;
             return;
@@ -44,5 +46,10 @@ public partial class TileSelectingSystem : SystemBase
 
         TileMapSingleton.HasSelectedCell = true;
         TileMapSingleton.SelectedCell = cell;
+    }
+
+    private bool canProcessInput()
+    {
+        return SystemAPI.GetSingleton<BattleState>().isStateValidForPlacingUnits();
     }
 }

@@ -8374,6 +8374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preparedOverlayPrefabs:
   - {fileID: 4719415157363422634, guid: c74a3cd01041e2d4fb9d2406fb54559f, type: 3}
+  - {fileID: 5378794369945236921, guid: 1c0a15b914cee7b4d86c31b215ea4cd0, type: 3}
 --- !u!4 &1989076373
 Transform:
   m_ObjectHideFlags: 0

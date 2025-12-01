@@ -4,6 +4,15 @@ using Unity.Transforms;
 
 public partial struct DeathProcessingSystem : ISystem
 {
+    public void OnCreate(ref SystemState state)
+    {
+        var _singletonQuery = state.GetEntityQuery(
+            ComponentType.ReadOnly<BattleState>()
+        );
+
+        state.RequireForUpdate(_singletonQuery);
+    }
+
     public void OnUpdate(ref SystemState state)
     {
         var ecb = new EntityCommandBuffer(Allocator.Temp);
@@ -31,6 +40,7 @@ public partial struct DeathProcessingSystem : ISystem
 
                 if (deadTower.ValueRO.type == TowerType.KingTower)
                 {
+                    SetGameEnd();
                     aliveState.ValueRW.isKingsTowerAlive = false;
                     UnityEngine.Debug.LogError($"player {identifier.ValueRO.playerId} is dead!");
                 }
@@ -61,5 +71,12 @@ public partial struct DeathProcessingSystem : ISystem
 
         ecb.Playback(state.EntityManager);
         ecb.Dispose();
+    }
+
+    private void SetGameEnd()
+    {
+        var battleState = SystemAPI.GetSingleton<BattleState>();
+        battleState.State = BattleStateType.Ended;
+        SystemAPI.SetSingleton(battleState);
     }
 }

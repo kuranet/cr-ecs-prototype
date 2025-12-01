@@ -11,6 +11,4 @@ public class FlyingTargetTagAuthoring : MonoBehaviour
             AddComponent(entity, new FlyingTargetTag());
         }
     }
-
 }
-
