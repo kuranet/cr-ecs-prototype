@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175bdb653c5259c449181e1de1700596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 6
-  cooldown: 0.7
-  castDelay: 0.5
-  castDuration: 0.1
+  range: 7.5
+  cooldown: 0.6
+  castDelay: 0.2
+  castDuration: 0
   prefab: {fileID: 3534150054169874487, guid: d270312f7be307c42a64d00cde0697c5, type: 3}

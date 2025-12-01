@@ -28,9 +28,17 @@ MonoBehaviour:
     addedValue: 1
     multipliedValue: 0
   - type: 3
-    addedValue: 100
+    addedValue: 32
     multipliedValue: 0
   - type: 4
     addedValue: 1
     multipliedValue: 0
-  _levelConfigs: []
+  _levelConfigs:
+  - levelToAdd: 1
+    configs:
+    - type: 0
+      addedValue: 3
+      multipliedValue: 0
+    - type: 3
+      addedValue: 3
+      multipliedValue: 0
