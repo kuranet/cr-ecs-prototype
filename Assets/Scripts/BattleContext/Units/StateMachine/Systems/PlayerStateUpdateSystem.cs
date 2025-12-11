@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct PlayerStateUpdateSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
@@ -20,6 +21,8 @@ public partial struct PlayerStateUpdateSystem : ISystem
                 //UnityEngine.Debug.LogError($"SWITCH TO IDLE");
                 ecb.RemoveComponent<UsingAbilityState>(entity);
                 ecb.AddComponent(entity, new IdleState());
+
+                state.EntityManager.SetComponentData(entity, new AnimationState { animation = AnimationType.Idle });
             }
         }
 
@@ -72,6 +75,7 @@ public partial struct PlayerStateUpdateSystem : ISystem
                         ecb.RemoveComponent<MovingState>(entity);
                     }
 
+                    state.EntityManager.SetComponentData(entity, new AnimationState { animation = AnimationType.Melee });
                     //UnityEngine.Debug.LogError($"SWITCH TO ATTACKING STATE");
                 }
             }
@@ -93,6 +97,7 @@ public partial struct PlayerStateUpdateSystem : ISystem
             ecb.RemoveComponent<IdleState>(entity);
             ecb.AddComponent(entity, new MovingState());
 
+            state.EntityManager.SetComponentData(entity, new AnimationState { animation = AnimationType.Moving });
             //UnityEngine.Debug.LogError($"SWITCH TO MOVING STATE");
         }
 

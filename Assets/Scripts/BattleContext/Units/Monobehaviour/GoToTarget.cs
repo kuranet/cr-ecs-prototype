@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,6 +15,14 @@ public class GoToTarget : MonoBehaviour
 
     private void Start()
     {
+        if (!World.DefaultGameObjectInjectionWorld.IsServer())
+        {
+            UnityEngine.Debug.LogWarning($"{gameObject.name} has GoToTarget which should exist only at server, destroy it");
+            enabled = false;
+            Destroy(this);
+            return;
+        }
+
         // enable obstacle after placing, so player would not be spawned at unawailable position. 
         obstacle.enabled = false;
     }

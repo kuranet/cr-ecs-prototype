@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.NetCode;
 using UnityEngine;
 
 public class OwnerTagAuthoring : MonoBehaviour
@@ -15,6 +16,7 @@ public class OwnerTagAuthoring : MonoBehaviour
     }
 }
 
-public struct OwnerTag : IComponentData {
-    public int PlayerId;
+public struct OwnerTag : IComponentData 
+{
+   [GhostField] public int PlayerId;
 }

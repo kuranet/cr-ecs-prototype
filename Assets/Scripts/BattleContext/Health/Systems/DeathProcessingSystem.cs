@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
@@ -31,8 +32,6 @@ public partial struct DeathProcessingSystem : ISystem
              .WithEntityAccess()
              .WithAll<DeadTag>())
         {
-            UnityEngine.Debug.LogError($"tower {towerOwner.ValueRO.PlayerId} {deadTower.ValueRO.type} is dead!");
-
             foreach (var (identifier, aliveState) in
                      SystemAPI.Query<RefRO<PlayerIdentifier>, RefRW<PlayerAliveState>>())
             {
@@ -42,10 +41,23 @@ public partial struct DeathProcessingSystem : ISystem
                 {
                     SetGameEnd();
                     aliveState.ValueRW.isKingsTowerAlive = false;
-                    UnityEngine.Debug.LogError($"player {identifier.ValueRO.playerId} is dead!");
                 }
                 else
                 {
+                    // get this player king tower and activate it.
+                    foreach(var (iden, owner, towerEntity) in SystemAPI.Query<RefRO<TowerIdentifier>, RefRO<OwnerTag>>().WithEntityAccess())
+                    {
+                        // this is needed king tower.
+                        if (iden.ValueRO.type == TowerType.KingTower && owner.ValueRO.PlayerId == towerOwner.ValueRO.PlayerId)
+                        {
+                            state.EntityManager.SetComponentData(towerEntity, new TowerActiveState { isActive = true});
+
+                            var health = state.EntityManager.GetComponentData<Health>(towerEntity);
+                            health.showHealthBar = true;
+                            state.EntityManager.SetComponentData(towerEntity, health);
+                        }
+                    }
+
                     if (aliveState.ValueRO.isLeftTowerAlive)
                     {
                         aliveState.ValueRW.isLeftTowerAlive = false;

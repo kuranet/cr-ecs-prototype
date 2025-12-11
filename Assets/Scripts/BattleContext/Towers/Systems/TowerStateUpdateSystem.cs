@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 [UpdateAfter(typeof(TargetSelectionSystem))]
+[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct TowerStateUpdateSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
@@ -24,12 +25,18 @@ public partial struct TowerStateUpdateSystem : ISystem
             }
         }
 
-        foreach (var (localTransform, target, entity) in
-                 SystemAPI.Query<RefRO<LocalTransform>, RefRO<Target>>()
+        foreach (var (localTransform, target, activeState, entity) in
+                 SystemAPI.Query<RefRO<LocalTransform>, RefRO<Target>, RefRO<TowerActiveState>>()
                  .WithEntityAccess()
                  .WithAll<TowerTag>()
                  .WithAny<IdleState>())
         {
+            // skip inactive towers.
+            if (activeState.ValueRO.isActive == false)
+            {
+                continue;
+            }
+
             var readyAbilities = UsingAbilityUtil.GetUnitAbilitiesBuffer(entity, state.EntityManager);
             if (readyAbilities.Count <= 0)
             {

@@ -6,6 +6,7 @@ using Unity.Physics.Systems;
 [RequireMatchingQueriesForUpdate]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(PhysicsSimulationGroup))]
+[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct HitOnCollisionSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)

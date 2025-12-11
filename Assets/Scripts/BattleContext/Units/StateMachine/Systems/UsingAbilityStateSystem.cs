@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 [UpdateAfter(typeof(TargetSelectionSystem))]
+[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct UsingAbilityStateSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)

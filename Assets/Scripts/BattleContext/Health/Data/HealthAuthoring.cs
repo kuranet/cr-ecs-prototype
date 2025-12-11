@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.NetCode;
 using UnityEngine;
 
 public class HealthAuthoring : MonoBehaviour
@@ -23,7 +24,7 @@ public class HealthAuthoring : MonoBehaviour
 
 public struct Health : IComponentData
 {
-    public float maxValue;
-    public float currentValue;
-    public bool showHealthBar;
+    [GhostField] public float maxValue;
+    [GhostField] public float currentValue;
+    [GhostField] public bool showHealthBar;
 }

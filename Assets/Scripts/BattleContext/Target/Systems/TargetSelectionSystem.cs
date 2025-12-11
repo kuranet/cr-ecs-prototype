@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 [UpdateInGroup(typeof(SimulationSystemGroup))]
+[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct TargetSelectionSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
@@ -40,6 +41,12 @@ public partial struct TargetSelectionSystem : ISystem
                 // Do not target self.
                 if (targetEntity == entity)
                 {
+                    continue;
+                }
+
+                if (!state.EntityManager.HasComponent<OwnerTag>(targetEntity))
+                {
+                    UnityEngine.Debug.LogError($"somebody doest haw owner tag! {targetEntity.Index}");
                     continue;
                 }
 

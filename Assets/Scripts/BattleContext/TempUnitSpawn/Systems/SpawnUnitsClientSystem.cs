@@ -1,7 +1,9 @@
 ﻿using Unity.Entities;
+using Unity.NetCode;
 using UnityEngine;
 
-public partial struct SpawnUnitsSystem : ISystem
+[UpdateInGroup(typeof(GhostInputSystemGroup))]
+public partial struct SpawnUnitsClientSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
@@ -19,14 +21,14 @@ public partial struct SpawnUnitsSystem : ISystem
         if (Input.GetMouseButtonUp(0) && canProcessInput())
         {
             Vector3 worldPoint = CameraManager.GetCameraOrientedPos();
-            var buf = SystemAPI.GetSingletonBuffer<UnitLibrary>();
 
-            var ent = state.EntityManager.Instantiate(buf[0].unitSpawnEntity);
+            var rpcEntity = ecb.CreateEntity();
+            ecb.AddComponent(rpcEntity, new SpawnCardRpcRequest { 
+                localPlayerIndex = LocalPlayer.LocalPlayerIndex, 
+                playedCard = 0, 
+                worldPoint = worldPoint});
 
-            // set some request info.
-            var requestInfo = state.EntityManager.GetComponentObject<RequestActorSpawn>(ent);
-            requestInfo.ownerPlayerId = LocalPlayer.LocalPlayerIndex;
-            requestInfo.requestedPosition = worldPoint;
+            ecb.AddComponent(rpcEntity, new SendRpcCommandRequest());
         }
 
         ecb.Playback(state.EntityManager);
@@ -35,6 +37,7 @@ public partial struct SpawnUnitsSystem : ISystem
 
     private bool canProcessInput()
     {
+        return true;
         return SystemAPI.GetSingleton<BattleState>().isStateValidForPlacingUnits();
     }
 }

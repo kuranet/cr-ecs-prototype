@@ -14,9 +14,11 @@ public class HealthBar : MonoBehaviour
 
     public void OnUpdate()
     {
-        var health = World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentData<Health>(Entity);
+        var em = World.DefaultGameObjectInjectionWorld.EntityManager;
+        var health = em.GetComponentData<Health>(Entity);
+        var owner = em.GetComponentData<OwnerTag>(Entity);
 
-        var isEnabled = health.showHealthBar;
+        var isEnabled = health.showHealthBar && (owner.PlayerId != LocalPlayer.LocalPlayerIndex || health.currentValue != health.maxValue);
         gameObject.SetActive(isEnabled);
 
         if (isEnabled == false)
